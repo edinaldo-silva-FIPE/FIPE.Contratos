@@ -1,0 +1,2 @@
+Scaffold-DbContext "data source=(local);initial catalog=FIPE.Contratos;persist security info=True;user id=fipe;Password=CDq73M9i;multipleactiveresultsets=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models/Context -Context "FIPEContratosContext" -Force 
+

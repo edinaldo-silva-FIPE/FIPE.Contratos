@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\SISTEMAS\FIPE\FIPE.Contratos\Fipe.Contratos.Web\API.Publish</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Imagens/fipe.png">
+      <publishTime>10/17/2019 15:28:02</publishTime>
+    </File>
+  </ItemGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=SC-SQL2.FIPE.LOCAL\ADM%3binitial catalog=FIPE.Contratos_HOMOLOG    %3bpersist security info=True%3buser id=usrAppSGPC_homolog%3bPassword=#fb5csnEDN25Ee%24x_&amp;H%40%3bmultipleactiveresultsets=True%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
