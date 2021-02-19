@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace ApiFipe
-{
+{ 
 	public static class AppSettings
     {
 
