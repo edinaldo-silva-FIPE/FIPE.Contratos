@@ -140,13 +140,13 @@ namespace ApiFipe.Models
             {
                 string sSQL = " SELECT DISTINCT OPORT.IdOportunidade, OPORT.IdSituacao, Substring(SITUA.DsSituacao,0,80) DsSituacao," +
                               "        OPORT.IdTipoOportunidade, Substring(OTIPO.DsTipoOportunidade,0,50) DsTipoOportunidade, " +
-                              "        Substring(OPORT.DsAssunto,1,80) DsAssunto, Substring(OPORT.DsObservacao,0,80) DsObservacao, " +
+                              "        OPORT.DsAssunto DsAssunto, Substring(OPORT.DsObservacao,0,80) DsObservacao, " +
                               "        OPORT.DtLimiteEntregaProposta, " +
                               "        OPORT.DtCriacao, OPORT.IdUsuarioCriacao, OPORT.IdUsuarioUltimaAlteracao, " +
                               " (select top 1 NmFantasia from OportunidadeCliente where IdOportunidade = OPORT.IdOportunidade) NmFantasia, " +
                               "(select top 1  NmPessoa from OportunidadeResponsavel orr  join PessoaFisica pf on(pf.IdPessoaFisica = orr.IdPessoaFisica) where IdOportunidade = OPORT.IdOportunidade) as contratante, " +
                               "(select top 1 IdProposta from proposta where IdOportunidade = OPORT.IdOportunidade) as IdProposta," +
-                              "(SELECT RAZAOSOCIAL + '  '  AS[text()] FROM OportunidadeCliente ST1 WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS PessoaJuridica," +
+                              "(SELECT NmFantasia + '  '  AS[text()] FROM OportunidadeCliente ST1 WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.NmFantasia FOR XML PATH(''))  AS PessoaJuridica," +
                               "(SELECT  ST1.NmPessoa + '  ' AS[text()] FROM(SELECT distinct  PROPO1.IdOportunidade, PESSO1.NmPessoa   from Oportunidade PROPO1  JOIN OportunidadeCliente PCLIE1  ON(PCLIE1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN OportunidadeResponsavel PCOOR1    ON(PCOOR1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN PessoaFisica PESSO1 ON(PESSO1.IdPessoaFisica = PCOOR1.IdPessoaFisica)) ST1 where st1.IdOportunidade = OPORT.IdOportunidade   ORDER BY ST1.NmPessoa  FOR XML PATH(''))  AS PessoaFisica," +
                               "(SELECT ppjd.UF + '  '  AS[text()] FROM OportunidadeCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS uf," +
                               "(SELECT ccd.NmCidade + '  '  AS[text()] FROM OportunidadeCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) join Cidade ccd on(ccd.IdCidade = ppjd.IdCidade) WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS cidade," +                              
