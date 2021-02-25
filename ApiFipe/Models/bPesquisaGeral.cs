@@ -146,10 +146,10 @@ namespace ApiFipe.Models
                               " (select top 1 NmFantasia from OportunidadeCliente where IdOportunidade = OPORT.IdOportunidade) NmFantasia, " +
                               "(select top 1  NmPessoa from OportunidadeResponsavel orr  join PessoaFisica pf on(pf.IdPessoaFisica = orr.IdPessoaFisica) where IdOportunidade = OPORT.IdOportunidade) as contratante, " +
                               "(select top 1 IdProposta from proposta where IdOportunidade = OPORT.IdOportunidade) as IdProposta," +
-                              "(SELECT NmFantasia + '  '  AS[text()] FROM OportunidadeCliente ST1 WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.NmFantasia FOR XML PATH(''))  AS PessoaJuridica," +
-                              "(SELECT  ST1.NmPessoa + '  ' AS[text()] FROM(SELECT distinct  PROPO1.IdOportunidade, PESSO1.NmPessoa   from Oportunidade PROPO1  JOIN OportunidadeCliente PCLIE1  ON(PCLIE1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN OportunidadeResponsavel PCOOR1    ON(PCOOR1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN PessoaFisica PESSO1 ON(PESSO1.IdPessoaFisica = PCOOR1.IdPessoaFisica)) ST1 where st1.IdOportunidade = OPORT.IdOportunidade   ORDER BY ST1.NmPessoa  FOR XML PATH(''))  AS PessoaFisica," +
+                              "(SELECT NmFantasia + '+'  AS[text()] FROM OportunidadeCliente ST1 WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.NmFantasia FOR XML PATH(''))  AS PessoaJuridica," +
+                              "(SELECT  ST1.NmPessoa + '+' AS[text()] FROM(SELECT distinct  PROPO1.IdOportunidade, PESSO1.NmPessoa   from Oportunidade PROPO1  JOIN OportunidadeCliente PCLIE1  ON(PCLIE1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN OportunidadeResponsavel PCOOR1    ON(PCOOR1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN PessoaFisica PESSO1 ON(PESSO1.IdPessoaFisica = PCOOR1.IdPessoaFisica)) ST1 where st1.IdOportunidade = OPORT.IdOportunidade   ORDER BY ST1.NmPessoa  FOR XML PATH(''))  AS PessoaFisica," +
                               "(SELECT  top 1 ppjd.UF + '  '  AS[text()] FROM OportunidadeCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS uf," +
-                              "(SELECT top 1 ccd.NmCidade + '  '  AS[text()] FROM OportunidadeCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) join Cidade ccd on(ccd.IdCidade = ppjd.IdCidade) WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS cidade," +                              
+                              "(SELECT top 1 ccd.NmCidade + '  '  AS[text()] FROM OportunidadeCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) join Cidade ccd on(ccd.IdCidade = ppjd.IdCidade) WHERE ST1.IdOportunidade = OCLIE.IdOportunidade ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS cidade," +
                               "(SELECT st1.NmPessoa + '  ' AS[text()] FROM(SELECT distinct  PROPO1.IdOportunidade, ppf.NmPessoa   from Oportunidade PROPO1  JOIN OportunidadeCliente PCLIE1  ON(PCLIE1.IdOportunidade = PROPO1.IdOportunidade) LEFT JOIN Cliente cc1 on cc1.IdCliente =PCLIE1.IdCliente join pessoa ppp on (ppp.IdPessoa = cc1.IdPessoa) join PessoaFisica ppf on (ppf.IdPessoaFisica = ppp.IdPessoaFisica)) ST1 where st1.IdOportunidade = OPORT.IdOportunidade   ORDER BY ST1.NmPessoa  FOR XML PATH(''))  AS PessoaFisicaContratante" +
                               " FROM   Oportunidade OPORT " +
                               "        LEFT JOIN OportunidadeCliente     OCLIE ON (OCLIE.IdOportunidade     = OPORT.IdOportunidade    ) " +
@@ -181,7 +181,8 @@ namespace ApiFipe.Models
                             {
                                 itemOportunidade.DsClienteTexto = Convert.ToString(reader["NmFantasia"]);
                                 itemOportunidade.DsCliente = new List<string>();
-                                itemOportunidade.DsCliente.Add(Convert.ToString(reader["NmFantasia"]));
+                                itemOportunidade.DsCliente.Add(" ");
+                                itemOportunidade.DsCliente.AddRange(Convert.ToString(reader["PessoaJuridica"]).Split('+').ToList());
                             }
                             else
                             {
@@ -192,7 +193,8 @@ namespace ApiFipe.Models
 
                             itemOportunidade.ResponsavelTexto = reader["contratante"].ToString();
                             itemOportunidade.Responsavel = new List<string>();
-                            itemOportunidade.Responsavel.Add(Convert.ToString(reader["contratante"]));
+                            itemOportunidade.Responsavel.Add(" ");
+                            itemOportunidade.Responsavel.AddRange(Convert.ToString(reader["PessoaFisica"]).Split('+').ToList());
                             itemOportunidade.DtCriacao = Convert.ToDateTime(reader["DtCriacao"]);
                             itemOportunidade.DsAssunto = Convert.ToString(reader["DsAssunto"]);
                             itemOportunidade.TipoOportunidade = Convert.ToString(reader["DsTipoOportunidade"]);
@@ -379,12 +381,13 @@ namespace ApiFipe.Models
                               " 	   PROPO.IdTipoOportunidade, Substring(OTIPO.DsTipoOportunidade,0,80) DsTipoOportunidade, PROPO.NuContratoCliente, " +
                               "        PROPO.DtProposta, PROPO.DtValidadeProposta, PROPO.DtLimiteEnvioProposta, PROPO.DtLimiteEntregaProposta as DtLimiteEntregaProposta ,  " +
                               "        ISNULL(PROPO.VlProposta,0) VlProposta, PROPO.DtCriacao, Substring(PROPO.DsObservacao, 0, 80) DsObservacao,PROPO.DtUltimaAlteracao as DtUltimaAlteracao, " +
-                              "        (SELECT NmFantasia + '  '  AS[text()] FROM propostacliente ST1 WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.NmFantasia FOR XML PATH(''))  AS PessoaJuridica, " +
-                              "        (SELECT ST1.NmPessoa + '  ' AS[text()] FROM(SELECT distinct  PROPO1.IdProposta, FISIC1.NmPessoa   from proposta PROPO1  JOIN propostacliente PCLIE1  ON(PCLIE1.idproposta = PROPO1.idproposta) LEFT JOIN propostacoordenador PCOOR1    ON(PCOOR1.idproposta = PROPO1.idproposta) LEFT JOIN propostadocs ODOCS1 ON(ODOCS1.idproposta = PROPO1.idproposta) LEFT JOIN pessoa PESSO1 ON(PESSO1.idpessoa = PCOOR1.idpessoa) LEFT JOIN pessoafisica FISIC1  ON(FISIC1.idpessoafisica = PCOOR1.idpessoa)) ST1 where st1.IdProposta = PROPO.IdProposta   ORDER BY ST1.NmPessoa  FOR XML PATH(''))  AS PessoaFisica," +
-                              "        (SELECT top 1 ppjd.UF + '  '  AS[text()] FROM PropostaCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS uf," +
-                              "        (SELECT top 1 ccd.NmCidade + '  '  AS[text()] FROM PropostaCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) join Cidade ccd on(ccd.IdCidade = ppjd.IdCidade) WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS cidade," +
+                              "        (SELECT  NmFantasia  + '+'  AS[text()] FROM propostacliente ST1 WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.NmFantasia FOR XML PATH(''))  AS PessoaJuridica, " +
+                              "        (SELECT  ST1.NmPessoa  + '+' AS[text()] FROM(SELECT distinct  PROPO1.IdProposta, FISIC1.NmPessoa   from proposta PROPO1  JOIN propostacliente PCLIE1  ON(PCLIE1.idproposta = PROPO1.idproposta) LEFT JOIN propostacoordenador PCOOR1    ON(PCOOR1.idproposta = PROPO1.idproposta) LEFT JOIN propostadocs ODOCS1 ON(ODOCS1.idproposta = PROPO1.idproposta) LEFT JOIN pessoa PESSO1 ON(PESSO1.idpessoa = PCOOR1.idpessoa) LEFT JOIN pessoafisica FISIC1  ON(FISIC1.idpessoafisica = PCOOR1.idpessoa)) ST1 where st1.IdProposta = PROPO.IdProposta   ORDER BY ST1.NmPessoa  FOR XML PATH(''))  AS PessoaFisica," +
+                              "        (SELECT top 1 ppjd.UF   AS[text()] FROM PropostaCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS uf," +
+                              "        (SELECT top 1 ccd.NmCidade   AS[text()] FROM PropostaCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) join Cidade ccd on(ccd.IdCidade = ppjd.IdCidade) WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS cidade," +
                               "        (select top 1  eef.DsEsferaEmpresa from PropostaCliente ppc join Cliente ccl on ppc.IdCliente = ccl.IdCliente join Pessoa pp on pp.IdPessoa = ccl.IdPessoa join PessoaJuridica ppj on pp.IdPessoaJuridica = ppj.IdPessoaJuridica join EsferaEmpresa eef on eef.IdEsferaEmpresa = ppj.IdEsferaEmpresa where IdProposta = PROPO.idproposta) esfera," +
-                              "        (select top 1  ppj.NmPessoa from PropostaCliente ppc join Cliente ccl on ppc.IdCliente = ccl.IdCliente join Pessoa pp on pp.IdPessoa  = ccl.IdPessoa join PessoaFisica ppj on pp.IdPessoaFisica = ppj.IdPessoaFisica  where IdProposta=PROPO.idproposta) as PessoaFisicaContratante" +
+                              "        (select top 1  ppj.NmPessoa from PropostaCliente ppc join Cliente ccl on ppc.IdCliente = ccl.IdCliente join Pessoa pp on pp.IdPessoa  = ccl.IdPessoa join PessoaFisica ppj on pp.IdPessoaFisica = ppj.IdPessoaFisica  where IdProposta=PROPO.idproposta) as PessoaFisicaContratante," +
+                              "        (SELECT TOP 1 eef.DsClassificacaoEmpresa FROM propostacliente ppc JOIN cliente ccl ON ppc.idcliente = ccl.idcliente JOIN pessoa pp  ON pp.idpessoa = ccl.idpessoa   JOIN pessoajuridica ppj ON pp.idpessoajuridica = ppj.idpessoajuridica JOIN ClassificacaoEmpresa eef  ON eef.IdClassificacaoEmpresa = ppj.IdClassificacaoEmpresa  WHERE idproposta = PROPO.idproposta)     classificacao" +
                               " FROM   PROPOSTA PROPO " +
                               "        LEFT JOIN PropostaCliente         PCLIE ON (PCLIE.IdProposta         = PROPO.IdProposta        ) " +
                               "        LEFT JOIN PropostaCoordenador     PCOOR ON (PCOOR.IdProposta         = PROPO.IdProposta        ) " +
@@ -416,7 +419,8 @@ namespace ApiFipe.Models
                             itemProposta.DsAssunto = Convert.ToString(reader["DsAssunto"]);
                             itemProposta.DsApelidoProposta = Convert.ToString(reader["DsApelidoProposta"]);
                             itemProposta.DsSituacao = Convert.ToString(reader["DsSituacao"]);
-                            itemProposta.VlProposta = Convert.ToDecimal(reader["VlProposta"]);
+                            if (Convert.ToDecimal(reader["VlProposta"]) > 0)
+                                itemProposta.VlProposta = Convert.ToDecimal(reader["VlProposta"]);
                             if (!string.IsNullOrEmpty(Convert.ToString(reader["DtLimiteEntregaProposta"])))
                                 itemProposta.DtLimiteEntregaProposta = Convert.ToDateTime(reader["DtLimiteEntregaProposta"]);
                             itemProposta.clientes = new List<string>();
@@ -425,22 +429,32 @@ namespace ApiFipe.Models
                             if (String.IsNullOrEmpty(Convert.ToString(reader["PessoaJuridica"])))
                             {
                                 itemProposta.clientesTexto = Convert.ToString(reader["PessoaFisicaContratante"]);
+                                itemProposta.clientes.Add(" ");
                                 itemProposta.clientes.Add(Convert.ToString(reader["PessoaFisicaContratante"]));
+
                             }
                             else
                             {
+                                itemProposta.clientes.Add(" ");
                                 itemProposta.clientesTexto = Convert.ToString(reader["PessoaJuridica"]);
-                                itemProposta.clientes.Add(Convert.ToString(reader["PessoaJuridica"]));
+                                itemProposta.clientes.AddRange(Convert.ToString(reader["PessoaJuridica"]).Split('+').ToList());
+
+
                             }
                             itemProposta.NmCidade = Convert.ToString(reader["cidade"]);
                             itemProposta.UF = Convert.ToString(reader["UF"]);
 
 
 
+
                             itemProposta.coordenadoresTexto = Convert.ToString(reader["PessoaFisica"]);
-                            itemProposta.coordenadores.Add(Convert.ToString(reader["PessoaFisica"]));
+                            itemProposta.coordenadores.Add(" ");
+                            itemProposta.coordenadores.AddRange(Convert.ToString(reader["PessoaFisica"]).Split('+').ToList());
                             itemProposta.DtUltimaAlteracao = Convert.ToDateTime(reader["DtUltimaAlteracao"]);
-                            itemProposta.DsEsfera = Convert.ToString(reader["esfera"]);
+                            if (!string.IsNullOrEmpty(Convert.ToString(reader["esfera"])))
+                                itemProposta.DsEsfera = Convert.ToString(reader["esfera"]);
+                            else
+                                itemProposta.DsEsfera = Convert.ToString(reader["classificacao"]);
                             allPropostas.Add(itemProposta);
                         }
                     }
@@ -619,8 +633,8 @@ namespace ApiFipe.Models
                               "        Substring(CONTR.DsObservacao, 0, 80) DsObservacao, ISNULL(CONTR.VlContrato,0) VlContrato, CONTR.DtAssinatura, " +
                               "        CONTR.NuCentroCusto, CONTR.CdISS, CONTR.IdTema, TEMAS.DsTema," +
                               "        CONTR.DtInicio, CONTR.DtFim, CONTR.IdUsuarioCriacao, CONTR.IdUsuarioUltimaAlteracao, " +
-                              "        (SELECT NmFantasia + '  '  AS [text()] FROM ContratoCliente ST1  WHERE ST1.IdContrato = CONTR.IdContrato  ORDER BY ST1.NmFantasia  FOR XML PATH (''))  AS PessoaJuridica," +
-                              "        (SELECT ST1.NmPessoa + '  ' AS [text()] FROM (SELECT distinct  PROPO1.IdContrato, FISIC1.NmPessoa   from  contrato PROPO1  JOIN contratocliente PCLIE1  ON ( PCLIE1.IdContrato = PROPO1.IdContrato ) LEFT JOIN contratocoordenador PCOOR1    ON ( PCOOR1.IdContrato = PROPO1.IdContrato ) LEFT JOIN contratodoc ODOCS1 ON ( ODOCS1.IdContrato = PROPO1.IdContrato ) LEFT JOIN pessoa PESSO1 ON ( PESSO1.idpessoa = PCOOR1.idpessoa ) LEFT JOIN pessoafisica FISIC1  ON (FISIC1.idpessoafisica = PCOOR1.idpessoa)) ST1 where st1.IdContrato = CONTR.IdContrato   ORDER BY ST1.NmPessoa  FOR XML PATH (''))  AS PessoaFisica" +
+                              "        (SELECT NmFantasia + '+'  AS [text()] FROM ContratoCliente ST1  WHERE ST1.IdContrato = CONTR.IdContrato  ORDER BY ST1.NmFantasia  FOR XML PATH (''))  AS PessoaJuridica," +
+                              "        (SELECT ST1.NmPessoa + '+' AS [text()] FROM (SELECT distinct  PROPO1.IdContrato, FISIC1.NmPessoa   from  contrato PROPO1  JOIN contratocliente PCLIE1  ON ( PCLIE1.IdContrato = PROPO1.IdContrato ) LEFT JOIN contratocoordenador PCOOR1    ON ( PCOOR1.IdContrato = PROPO1.IdContrato ) LEFT JOIN contratodoc ODOCS1 ON ( ODOCS1.IdContrato = PROPO1.IdContrato ) LEFT JOIN pessoa PESSO1 ON ( PESSO1.idpessoa = PCOOR1.idpessoa ) LEFT JOIN pessoafisica FISIC1  ON (FISIC1.idpessoafisica = PCOOR1.idpessoa)) ST1 where st1.IdContrato = CONTR.IdContrato   ORDER BY ST1.NmPessoa  FOR XML PATH (''))  AS PessoaFisica" +
                               " FROM   CONTRATO CONTR" +
                               "         LEFT JOIN ContratoCliente         CCLIE ON (CCLIE.IdContrato         = CONTR.IdContrato        ) " +
                               "         LEFT JOIN ContratoDoc             CDOCS ON (CDOCS.IdContrato         = CONTR.IdContrato        ) " +
@@ -654,13 +668,16 @@ namespace ApiFipe.Models
                             itemContrato.DsPrazoExecucao = Convert.ToString(reader["DsPrazoExecucao"]);
                             itemContrato.DsSituacao = Convert.ToString(reader["DsSituacao"]);
                             itemContrato.DsCentroCusto = Convert.ToString(reader["NucentroCusto"]);
-                            itemContrato.VlContrato = Convert.ToDecimal(reader["VlContrato"]);
+                            if (Convert.ToDecimal(reader["VlContrato"]) > 0)
+                                itemContrato.VlContrato = Convert.ToDecimal(reader["VlContrato"]);
                             itemContrato.clientes = new List<string>();
                             itemContrato.coordenadores = new List<string>();
                             itemContrato.clientesTexto = Convert.ToString(reader["PessoaJuridica"]);
-                            itemContrato.clientes.Add(Convert.ToString(reader["PessoaJuridica"]));
+                            itemContrato.clientes.Add(" ");
+                            itemContrato.clientes.AddRange(Convert.ToString(reader["PessoaJuridica"]).Split('+').ToList());
                             itemContrato.coordenadoresTexto = Convert.ToString(reader["PessoaFisica"]);
-                            itemContrato.coordenadores.Add(Convert.ToString(reader["PessoaFisica"]));
+                            itemContrato.coordenadores.Add(" ");
+                            itemContrato.coordenadores.AddRange(Convert.ToString(reader["PessoaFisica"]).Split('+').ToList());
 
 
                             if (Convert.ToBoolean(reader["IcOrdemInicio"]))
