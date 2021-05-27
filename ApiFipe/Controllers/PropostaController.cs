@@ -1577,7 +1577,7 @@ namespace ApiFipe.Controllers
                     var retornoPropostas = new OutPutListaPropostas();
                     var listaPropostas = new List<OutPutGetPropostas>(); 
                     var Tamanho = listaPropostas.Count;
-                    listaPropostas = new bPesquisaGeral(db).GetPropostas();
+                        listaPropostas = new bPesquisaGeral(db).GetPropostas();
                     retornoPropostas.lstPropostas = listaPropostas;
                     return retornoPropostas;
                 }
@@ -5780,6 +5780,7 @@ namespace ApiFipe.Controllers
             public string NmCidade { get; set; }
             public int Tamanho { get; set; }
             public int? IdTipoOportunidade { get; set; }
+            public bool HasAditivo { get; set; }
         }
 
         public class InputPesquisaProposta

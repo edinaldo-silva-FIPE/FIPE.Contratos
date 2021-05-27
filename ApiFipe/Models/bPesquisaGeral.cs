@@ -387,7 +387,7 @@ namespace ApiFipe.Models
                               "        (SELECT top 1 ccd.NmCidade   AS[text()] FROM PropostaCliente ST1 join Cliente ORESP1 on(ORESP1.IdCliente = st1.IdCliente) join Pessoa o on(o.IdPessoa = ORESP1.IdPessoa) join PessoaJuridica ppjd on(ppjd.IdPessoaJuridica = o.IdPessoaJuridica) join Cidade ccd on(ccd.IdCidade = ppjd.IdCidade) WHERE ST1.IdProposta = PCLIE.IdProposta ORDER BY ST1.RazaoSocial FOR XML PATH(''))  AS cidade," +
                               "        (select top 1  eef.DsEsferaEmpresa from PropostaCliente ppc join Cliente ccl on ppc.IdCliente = ccl.IdCliente join Pessoa pp on pp.IdPessoa = ccl.IdPessoa join PessoaJuridica ppj on pp.IdPessoaJuridica = ppj.IdPessoaJuridica join EsferaEmpresa eef on eef.IdEsferaEmpresa = ppj.IdEsferaEmpresa where IdProposta = PROPO.idproposta) esfera," +
                               "        (select top 1  ppj.NmPessoa from PropostaCliente ppc join Cliente ccl on ppc.IdCliente = ccl.IdCliente join Pessoa pp on pp.IdPessoa  = ccl.IdPessoa join PessoaFisica ppj on pp.IdPessoaFisica = ppj.IdPessoaFisica  where IdProposta=PROPO.idproposta) as PessoaFisicaContratante," +
-                              "        (SELECT TOP 1 eef.DsClassificacaoEmpresa FROM propostacliente ppc JOIN cliente ccl ON ppc.idcliente = ccl.idcliente JOIN pessoa pp  ON pp.idpessoa = ccl.idpessoa   JOIN pessoajuridica ppj ON pp.idpessoajuridica = ppj.idpessoajuridica JOIN ClassificacaoEmpresa eef  ON eef.IdClassificacaoEmpresa = ppj.IdClassificacaoEmpresa  WHERE idproposta = PROPO.idproposta)     classificacao" +
+                              "        (SELECT TOP 1 eef.DsClassificacaoEmpresa FROM propostacliente ppc JOIN cliente ccl ON ppc.idcliente = ccl.idcliente JOIN pessoa pp  ON pp.idpessoa = ccl.idpessoa   JOIN pessoajuridica ppj ON pp.idpessoajuridica = ppj.idpessoajuridica JOIN ClassificacaoEmpresa eef  ON eef.IdClassificacaoEmpresa = ppj.IdClassificacaoEmpresa  WHERE idproposta = PROPO.idproposta)     classificacao, (select count(1) from ContratoAditivo where IdProposta= PROPO.IdProposta) as HasAditivo" +
                               " FROM   PROPOSTA PROPO " +
                               "        LEFT JOIN PropostaCliente         PCLIE ON (PCLIE.IdProposta         = PROPO.IdProposta        ) " +
                               "        LEFT JOIN PropostaCoordenador     PCOOR ON (PCOOR.IdProposta         = PROPO.IdProposta        ) " +
@@ -443,6 +443,7 @@ namespace ApiFipe.Models
                             }
                             itemProposta.NmCidade = Convert.ToString(reader["cidade"]);
                             itemProposta.UF = Convert.ToString(reader["UF"]);
+                            itemProposta.HasAditivo = Convert.ToBoolean(reader["HasAditivo"]);
 
 
 
