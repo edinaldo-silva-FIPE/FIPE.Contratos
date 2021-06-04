@@ -928,8 +928,13 @@ namespace ApiFipe.Controllers
                     if (retornoProposta == null)
                     {
                         return itemProposta;
-                    }
+                    }                  
+                        foreach(var coord in retornoProposta.PropostaCoordenador)
+                        {
 
+                        coord.IcAprovado = true;
+                        }
+                    
                     if (historicoSituacao.Count > 1)
                     {
                         var lastHistSituacao = historicoSituacao[1];
