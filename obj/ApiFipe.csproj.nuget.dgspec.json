@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Usuarios\\alessandro.oliveira\\Documents\\GitHub\\FIPE.Contratos\\ApiFipe.csproj": {}
+    "D:\\Usuarios\\alessandro.oliveira\\Source\\Repos\\FIPE.Contratos\\ApiFipe.csproj": {}
   },
   "projects": {
-    "D:\\Usuarios\\alessandro.oliveira\\Documents\\GitHub\\FIPE.Contratos\\ApiFipe.csproj": {
+    "D:\\Usuarios\\alessandro.oliveira\\Source\\Repos\\FIPE.Contratos\\ApiFipe.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Usuarios\\alessandro.oliveira\\Documents\\GitHub\\FIPE.Contratos\\ApiFipe.csproj",
+        "projectUniqueName": "D:\\Usuarios\\alessandro.oliveira\\Source\\Repos\\FIPE.Contratos\\ApiFipe.csproj",
         "projectName": "ApiFipe",
-        "projectPath": "D:\\Usuarios\\alessandro.oliveira\\Documents\\GitHub\\FIPE.Contratos\\ApiFipe.csproj",
+        "projectPath": "D:\\Usuarios\\alessandro.oliveira\\Source\\Repos\\FIPE.Contratos\\ApiFipe.csproj",
         "packagesPath": "D:\\Usuarios\\alessandro.oliveira\\.nuget\\packages\\",
-        "outputPath": "D:\\Usuarios\\alessandro.oliveira\\Documents\\GitHub\\FIPE.Contratos\\obj\\",
+        "outputPath": "D:\\Usuarios\\alessandro.oliveira\\Source\\Repos\\FIPE.Contratos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
