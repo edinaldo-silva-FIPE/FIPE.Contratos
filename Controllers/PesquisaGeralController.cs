@@ -157,6 +157,7 @@ namespace ApiFipe.Controllers
             public string    dsEstado                { get; set; }
             public string    dsValorMin              { get; set; }
             public string    dsValorMax              { get; set; }
+            public int? idComprovacaoValor { get; set; }
         }
         public class OutputGetPesquisaGeral
         {

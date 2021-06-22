@@ -325,6 +325,13 @@ namespace ApiFipe.Models
 
 
 
+                if (pFiltro.idComprovacaoValor.ToString() != "")
+                {
+                    sSQL = sSQL + " AND (PROPO.IdComprovacaoValor = " + pFiltro.idComprovacaoValor.ToString() + ") ";
+                }
+
+
+
 
                 //====================================================================== FINAL dos FILTROS ========================================================
                 //====================================================================== FINAL dos FILTROS ========================================================
@@ -411,7 +418,7 @@ namespace ApiFipe.Models
                               "        LEFT JOIN EsferaEmpresa           ESFER ON (ESFER.IdEsferaEmpresa    = JURID.IdEsferaEmpresa   ) " +
                               "        LEFT JOIN Cidade                  CIDPJ   ON (CIDPJ.IdCidade         = JURID.IdCidade          ) " +
                               "        LEFT JOIN Cidade                  CIDPF   ON (CIDPF.IdCidade         = FISIC.IdCidade          ) " +
-                              " WHERE (PROPO.IdProposta <> 0) AND (PROPO.IdSituacao<>99) ORDER BY PROPO.IdProposta DESC  ";   //EGS 30.04.2021 Solicitado para nao aparecer proposta em "Elaboracao de Aditivo"
+                              " WHERE (PROPO.IdProposta <> 0) ORDER BY PROPO.IdProposta DESC  ";   
 
                 string stringConexaoPortal = FIPEContratosContext.ConnectionString;
 
@@ -452,7 +459,7 @@ namespace ApiFipe.Models
                             }
                             itemProposta.NmCidade           = Convert.ToString(reader["cidade"]);
                             itemProposta.UF                 = Convert.ToString(reader["UF"]);
-                            itemProposta.HasAditivo = Convert.ToBoolean(reader["HasAditivo"]);
+                            itemProposta.HasAditivo         = Convert.ToBoolean(reader["HasAditivo"]);
                             itemProposta.coordenadoresTexto = Convert.ToString(reader["PessoaFisica"]);
                             itemProposta.coordenadores.Add(" ");
                             itemProposta.coordenadores.AddRange(Convert.ToString(reader["PessoaFisica"]).Split('+').ToList());
@@ -461,6 +468,12 @@ namespace ApiFipe.Models
                                 itemProposta.DsEsfera = Convert.ToString(reader["esfera"]);
                             else
                                 itemProposta.DsEsfera = Convert.ToString(reader["classificacao"]);
+
+                            //EGS 30.06.2021 se for aditivo, mostra no final do assunto
+                            if (itemProposta.HasAditivo == true)
+                            {
+                                itemProposta.DsApelidoProposta = itemProposta.DsApelidoProposta + " (aditivo)";
+                            }
                             allPropostas.Add(itemProposta);
                         }
                     }

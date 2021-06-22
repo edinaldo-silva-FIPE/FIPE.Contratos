@@ -1009,10 +1009,10 @@ namespace ApiFipe.Models
                 lstUltimoAditivoAtivo.advDtInicioAditivo         = itemAditivo.DtInicio.ToString().Substring(0,10);
                 lstUltimoAditivoAtivo.advDtFinalAditivo          = itemAditivo.DtFim.ToString().Substring(0, 10);
                 lstUltimoAditivoAtivo.advDsAditivo               = itemAditivo.DsAditivo;
-                lstUltimoAditivoAtivo.IcAditivoValor             = itemAditivo.IcAditivoValor;
-                lstUltimoAditivoAtivo.IcAditivoData              = itemAditivo.IcAditivoData;
-                lstUltimoAditivoAtivo.IcAditivoEscopo            = itemAditivo.IcAditivoEscopo;
-                lstUltimoAditivoAtivo.icAditivoOutro             = itemAditivo.IcAditivoRetRat;
+                lstUltimoAditivoAtivo.IcTipoAditivoValor         = itemAditivo.IcAditivoValor;
+                lstUltimoAditivoAtivo.IcTipoAditivoData          = itemAditivo.IcAditivoData;
+                lstUltimoAditivoAtivo.IcTipoAditivoEscopo        = itemAditivo.IcAditivoEscopo;
+                lstUltimoAditivoAtivo.IcTipoAditivoOutro         = itemAditivo.IcAditivoRetRat;
                 lstUltimoAditivoAtivo.bPossuiAditivo             = true;
             }
             return lstUltimoAditivoAtivo;

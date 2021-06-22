@@ -92,7 +92,12 @@ namespace ApiFipe.Models
             cliente.Credentials   = new NetworkCredential("noreply@fipe.org.br", "lata1234");
             if ( FIPEContratosContext.EnvironmentIsProduction) mensagem.Subject = "SGPC-"     + Assunto;
             if (!FIPEContratosContext.EnvironmentIsProduction) mensagem.Subject = "SGPC HML-" + Assunto;
-            cliente.Send(mensagem);
+
+            if (FIPEContratosContext.EnvironmentIsProduction)
+            {
+                cliente.Send(mensagem);
+            }
+
             //===========================================================================================================================
             //===========================================================================================================================
         }

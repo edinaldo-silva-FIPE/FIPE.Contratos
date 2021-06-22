@@ -45,6 +45,7 @@ namespace ApiFipe.Models
             return classificacao;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Atribuição desnecessária de um valor", Justification = "<Pendente>")]
         public bool UpdateClassificacao(ClassificacaoEmpresa item)
         {
 

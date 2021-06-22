@@ -14,7 +14,10 @@
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "sqlDebugging": false,
+      "nativeDebugging": true,
+      "jsWebView2Debugging": false
     },
     "ApiFipe": {
       "commandName": "Project",

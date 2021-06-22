@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kgUP/Plx3rFpK7Z2vjSUQfb2tK18oh4+b0BdvwlFG4Wo8WFSkGjGFg0xPo/YdV8hYlQTXGLn9heNEN0WRsw3iA==",
+  "dgSpecHash": "72rIGyYQCoysDfvRshYsragzgLUGfOpLUjATrxlMu5W7umvPtpb/PH6unaxZAKRSk0AAkpcbo5dFzdw1sfI58A==",
   "success": true,
-  "projectFilePath": "D:\\Usuarios\\alessandro.oliveira\\Source\\Repos\\FIPE.Contratos\\ApiFipe.csproj",
+  "projectFilePath": "D:\\Usuarios\\alessandro.oliveira\\Documents\\GitHub\\FIPE.Contratos\\ApiFipe.csproj",
   "expectedPackageFiles": [
     "D:\\Usuarios\\alessandro.oliveira\\.nuget\\packages\\epplus.core\\1.5.4\\epplus.core.1.5.4.nupkg.sha512",
     "D:\\Usuarios\\alessandro.oliveira\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",

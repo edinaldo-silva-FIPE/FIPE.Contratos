@@ -90,6 +90,7 @@ namespace ApiFipe.Models.Context
         public virtual DbSet<TipoDocsAcompanhaNf> TipoDocsAcompanhaNf { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoEntidade> TipoEntidade { get; set; }
+        public virtual DbSet<TipoComprovacaoValor> TipoComprovacaoValor { get; set; }
         public virtual DbSet<TipoEntregaDocumento> TipoEntregaDocumento { get; set; }
         public virtual DbSet<TipoOportunidade> TipoOportunidade { get; set; }
         public virtual DbSet<TipoPessoa> TipoPessoa { get; set; }
@@ -2349,6 +2350,22 @@ namespace ApiFipe.Models.Context
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            //EGS 30.06.2021 Tabela Comprovacao de Valor na Proposta
+            modelBuilder.Entity<TipoComprovacaoValor>(entity =>
+            {
+                entity.HasKey(e => e.IdComprovacaoValor);
+
+                entity.Property(e => e.DsComprovacaoValor)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Obrigatorio).IsRequired().HasColumnName("Obrigatorio");
+
+                entity.Property(e => e.IcAtivo).IsRequired().HasColumnName("IcAtivo");
+
             });
 
             modelBuilder.Entity<TipoContratacaoEquipeTecnica>(entity =>

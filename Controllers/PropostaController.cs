@@ -928,13 +928,13 @@ namespace ApiFipe.Controllers
                     if (retornoProposta == null)
                     {
                         return itemProposta;
-                    }                  
+                    }
                         foreach(var coord in retornoProposta.PropostaCoordenador)
                         {
 
                         coord.IcAprovado = true;
                         }
-                    
+
                     if (historicoSituacao.Count > 1)
                     {
                         var lastHistSituacao = historicoSituacao[1];
@@ -995,39 +995,44 @@ namespace ApiFipe.Controllers
                     if ((AppSettings.constGlobalUserID == 0) && (retornoProposta.IdUsuarioUltimaAlteracao != 0)) { AppSettings.constGlobalUserID = (Int32)retornoProposta.IdUsuarioUltimaAlteracao; }
                     _GLog._GravaLog(AppSettings.constGlobalUserID, "BuscaPropostaId [" + id + "] GlobalUserID [" + AppSettings.constGlobalUserID + "] e sit [" + retornoProposta.IdSituacao + "]");
 
-                    itemProposta.IdSituacao               = retornoProposta.IdSituacao;
-                    itemProposta.IdTema                   = retornoProposta.IdTema;
-                    itemProposta.IdTipoProposta           = retornoProposta.IdTipoProposta;
-                    itemProposta.IdUsuarioCriacao         = retornoProposta.IdUsuarioCriacao;
-                    var NmUsuario                         = new bUsuario(db).GetById(retornoProposta.IdUsuarioCriacao);
-                    var pessoaFisica                      = new bPessoaFisica(db).GetById(NmUsuario.IdPessoa);
-                    itemProposta.NmUsuario                = pessoaFisica.NmPessoa;
+                    itemProposta.IdSituacao                 = retornoProposta.IdSituacao;
+                    itemProposta.IdTema                     = retornoProposta.IdTema;
+                    itemProposta.IdTipoProposta             = retornoProposta.IdTipoProposta;
+                    itemProposta.IdUsuarioCriacao           = retornoProposta.IdUsuarioCriacao;
+                    var NmUsuario                           = new bUsuario(db).GetById(retornoProposta.IdUsuarioCriacao);
+                    var pessoaFisica                        = new bPessoaFisica(db).GetById(NmUsuario.IdPessoa);
+                    itemProposta.NmUsuario                  = pessoaFisica.NmPessoa;
+                                                            
+                    itemProposta.IdUsuarioUltimaAlteracao   = retornoProposta.IdUsuarioUltimaAlteracao;
+                    itemProposta.NuPrazoEstimadoMes         = retornoProposta.NuPrazoEstimadoMes;
+                    itemProposta.DsApelidoProposta          = retornoProposta.DsApelidoProposta;
+                    itemProposta.DsAssunto                  = retornoProposta.DsAssunto;
+                    itemProposta.DsObjeto                   = retornoProposta.DsObjeto;
+                    itemProposta.NuPrazoExecucao            = retornoProposta.NuPrazoExecucao;
+                    itemProposta.DtAssinaturaContrato       = retornoProposta.DtAssinaturaContrato;
+                    itemProposta.DtAutorizacaoInicio        = retornoProposta.DtAutorizacaoInicio;
+                    itemProposta.DtCriacao                  = retornoProposta.DtCriacao;
+                    itemProposta.DtLimiteEnvioProposta      = retornoProposta.DtLimiteEnvioProposta;
+                    itemProposta.DtProposta                 = retornoProposta.DtCriacao;
+                    itemProposta.DtUltimaAlteracao          = retornoProposta.DtUltimaAlteracao;
+                    itemProposta.DtValidadeProposta         = retornoProposta.DtValidadeProposta;
+                    itemProposta.DtLimiteEntregaProposta    = retornoProposta.DtLimiteEntregaProposta;
+                    itemProposta.VlProposta                 = retornoProposta.VlProposta;
+                    itemProposta.DtAssinaturaContrato       = retornoProposta.DtAssinaturaContrato;
+                    itemProposta.Reajustes                  = retornoProposta.Reajustes;
+                    itemProposta.OrdemInicio                = retornoProposta.OrdemInicio;     //EGS 30.09.2020 Estava pegando campo errado
+                    itemProposta.VlContrato                 = retornoProposta.VlContrato;
+                    itemProposta.IdTipoReajuste             = retornoProposta.IdTipoReajuste;
+                    itemProposta.RenovacaoAutomatica        = retornoProposta.RenovacaoAutomatica;
+                    itemProposta.IdFundamento               = retornoProposta.IdFundamento;
+                    itemProposta.IdContrato                 = retornoProposta.IdContrato;
+                    itemProposta.IcContratantesValidos      = retornoProposta.IcContratantesValidos;
+                    itemProposta.IcAditivoAnalisado         = retornoProposta.IcAditivoAnalisado;
 
-                    itemProposta.IdUsuarioUltimaAlteracao = retornoProposta.IdUsuarioUltimaAlteracao;
-                    itemProposta.NuPrazoEstimadoMes       = retornoProposta.NuPrazoEstimadoMes;
-                    itemProposta.DsApelidoProposta        = retornoProposta.DsApelidoProposta;
-                    itemProposta.DsAssunto                = retornoProposta.DsAssunto;
-                    itemProposta.DsObjeto                 = retornoProposta.DsObjeto;
-                    itemProposta.NuPrazoExecucao          = retornoProposta.NuPrazoExecucao;
-                    itemProposta.DtAssinaturaContrato     = retornoProposta.DtAssinaturaContrato;
-                    itemProposta.DtAutorizacaoInicio      = retornoProposta.DtAutorizacaoInicio;
-                    itemProposta.DtCriacao                = retornoProposta.DtCriacao;
-                    itemProposta.DtLimiteEnvioProposta    = retornoProposta.DtLimiteEnvioProposta;
-                    itemProposta.DtProposta               = retornoProposta.DtCriacao;
-                    itemProposta.DtUltimaAlteracao        = retornoProposta.DtUltimaAlteracao;
-                    itemProposta.DtValidadeProposta       = retornoProposta.DtValidadeProposta;
-                    itemProposta.DtLimiteEntregaProposta  = retornoProposta.DtLimiteEntregaProposta;
-                    itemProposta.VlProposta               = retornoProposta.VlProposta;
-                    itemProposta.DtAssinaturaContrato     = retornoProposta.DtAssinaturaContrato;
-                    itemProposta.Reajustes                = retornoProposta.Reajustes;
-                    itemProposta.OrdemInicio              = retornoProposta.OrdemInicio;     //EGS 30.09.2020 Estava pegando campo errado
-                    itemProposta.VlContrato               = retornoProposta.VlContrato;
-                    itemProposta.IdTipoReajuste           = retornoProposta.IdTipoReajuste;
-                    itemProposta.RenovacaoAutomatica      = retornoProposta.RenovacaoAutomatica;
-                    itemProposta.IdFundamento             = retornoProposta.IdFundamento;
-                    itemProposta.IdContrato               = retornoProposta.IdContrato;
-                    itemProposta.IcContratantesValidos    = retornoProposta.IcContratantesValidos;
-                    itemProposta.IcAditivoAnalisado       = retornoProposta.IcAditivoAnalisado;
+                    itemProposta.IdComprovacaoValor         = retornoProposta.IdComprovacaoValor;
+                    itemProposta.ComprovacaoValorJustifica  = retornoProposta.ComprovacaoValorJustifica;
+
+
                     if (retornoProposta.IdContrato != null)
                     {
                         var contrato = db.Contrato.Where(w => w.IdContrato == retornoProposta.IdContrato).FirstOrDefault();
@@ -5542,24 +5547,26 @@ namespace ApiFipe.Controllers
             public bool? IcRitoSumario { get; set; }
             public string DsAditivo { get; set; }
             public int? IdTipoAditivo { get; set; }
-            public DateTime? DtNovoFimVigencia           { get; set; }
-            public decimal?  VlContratoComAditivo        { get; set; }
-            public bool?     IcContratantesValidos       { get; set; }
-            public short?    IdUnidadeTempo              { get; set; }
-            public short?    IdUnidadeTempoJuridico      { get; set; }
-            public int?      NuPrazoExecucaoJuridico     { get; set; }
-            public decimal?  NuPrazoEstimadoMesJuridico  { get; set; }
-            public string    NuContratoCliente           { get; set; }
-            public bool?     IcInformacoesIncompletas    { get; set; }
-            public bool?     IcAditivoData               { get; set; }
-            public bool?     IcAditivoEscopo             { get; set; }
-            public bool?     IcAditivoValor              { get; set; }
-            public bool?     IcAditivoRetRat             { get; set; }
-            public decimal?  VlAditivo                   { get; set; }
-            public string    PerfilSolicitanteAjuste     { get; set; }
-            public DateTime? DtVigenciaAtual             { get; set; }
-            public DateTime? DtVigenciaInicial           { get; set; }
-            public bool?     IcAditivoAnalisado          { get; set; }
+            public DateTime? DtNovoFimVigencia               { get; set; }
+            public decimal?  VlContratoComAditivo            { get; set; }
+            public bool?     IcContratantesValidos           { get; set; }
+            public short?    IdUnidadeTempo                  { get; set; }
+            public short?    IdUnidadeTempoJuridico          { get; set; }
+            public int?      NuPrazoExecucaoJuridico         { get; set; }
+            public decimal?  NuPrazoEstimadoMesJuridico      { get; set; }
+            public string    NuContratoCliente               { get; set; }
+            public bool?     IcInformacoesIncompletas        { get; set; }
+            public bool?     IcAditivoData                   { get; set; }
+            public bool?     IcAditivoEscopo                 { get; set; }
+            public bool?     IcAditivoValor                  { get; set; }
+            public bool?     IcAditivoRetRat                 { get; set; }
+            public decimal?  VlAditivo                       { get; set; }
+            public string    PerfilSolicitanteAjuste         { get; set; }
+            public DateTime? DtVigenciaAtual                 { get; set; }
+            public DateTime? DtVigenciaInicial               { get; set; }
+            public bool?     IcAditivoAnalisado              { get; set; }
+            public int       IdComprovacaoValor              { get; set; }
+            public string    ComprovacaoValorJustifica       { get; set; }
         }
 
         public class InputEncaminhaAditivoContrato

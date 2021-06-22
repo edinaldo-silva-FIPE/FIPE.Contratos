@@ -5,6 +5,7 @@
   },
   "compilationOptions": {
     "defines": [
+      "DEBUG",
       "TRACE",
       "DEBUG",
       "NETCOREAPP",
@@ -17,13 +18,13 @@
     ],
     "languageVersion": "7.3",
     "platform": "",
-    "allowUnsafe": false,
+    "allowUnsafe": true,
     "warningsAsErrors": false,
     "optimize": false,
     "keyFile": "",
     "emitEntryPoint": true,
     "xmlDoc": false,
-    "debugType": "portable"
+    "debugType": "full"
   },
   "targets": {
     ".NETCoreApp,Version=v2.2": {

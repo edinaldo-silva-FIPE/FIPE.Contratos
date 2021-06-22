@@ -63,6 +63,10 @@ namespace ApiFipe.Models.Context
         public decimal? VlAditivo { get; set; }
         public bool? IcAditivoRetRat { get; set; }
         public bool? IcAditivoAnalisado { get; set; }
+        public short  IdComprovacaoValor { get; set; }
+        public string ComprovacaoValorJustifica { get; set; }
+
+
 
         public virtual Contrato IdContratoNavigation { get; set; }
         public virtual FundamentoContratacao IdFundamentoNavigation { get; set; }

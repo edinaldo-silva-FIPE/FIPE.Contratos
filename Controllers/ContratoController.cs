@@ -5408,10 +5408,10 @@ namespace ApiFipe.Controllers
         public string    advValorContratoOriginal    { get; set; }
         public string    advValorContratoAditivo     { get; set; }
         public string    advValorAditivo             { get; set; }
-        public bool?     IcAditivoValor              { get; set; }
-        public bool?     IcAditivoData               { get; set; }
-        public bool?     IcAditivoEscopo             { get; set; }
-        public bool?     icAditivoOutro              { get; set; }
+        public bool?     IcTipoAditivoValor          { get; set; }
+        public bool?     IcTipoAditivoData           { get; set; }
+        public bool?     IcTipoAditivoEscopo         { get; set; }
+        public bool?     IcTipoAditivoOutro          { get; set; }
         public bool      bPossuiAditivo              { get; set; }
     }
 
